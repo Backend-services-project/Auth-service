@@ -14,16 +14,59 @@ java {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	// Spring Boot Starter Web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
 
+	// Spring Boot Starter Security (For Authentication)
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// Spring Boot Starter Data JPA (For Database)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// PostgreSQL/MySQL Driver (Choose One)
+//	implementation 'org.postgresql:postgresql'  // Use for PostgreSQL
+	implementation 'mysql:mysql-connector-java:8.0.33'
+
+	implementation 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+	// If using Spring Boot, also add:
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// BCrypt (For Password Hashing)
+	implementation 'org.springframework.security:spring-security-crypto'
+
+	// Hibernate Validator (For @Valid)
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'backendServices:jwtLib:0.0.1-SNAPSHOT'
+
+	implementation 'com.google.flogger:flogger:0.7.4'
+	implementation 'com.google.flogger:flogger-system-backend:0.7.4'
+
+	// H2 Database (For Testing, Optional)
+	runtimeOnly 'com.h2database:h2'
+
+	// Spring Boot DevTools (For Hot Reload, Optional)
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Spring Boot Starter Test (For Unit Testing)
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Spring Security Test (For Security Testing)
+	testImplementation 'org.springframework.security:spring-security-test'
+}
 
 tasks.named('test') {
 	useJUnitPlatform()

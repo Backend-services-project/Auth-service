@@ -1,4 +1,4 @@
-package Backend_services.Auth_service;
+package BackendServices.authService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

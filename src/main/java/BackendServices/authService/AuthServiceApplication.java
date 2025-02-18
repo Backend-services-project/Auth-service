@@ -1,4 +1,4 @@
-package Backend_services.Auth_service;
+package BackendServices.authService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
