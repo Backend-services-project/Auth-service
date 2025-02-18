@@ -1,12 +1,15 @@
 package BackendServices.authService.controller;
 
 import BackendServices.authService.model.LoginRequest;
+import BackendServices.authService.model.LoginResponse;
+import BackendServices.authService.repository.UserRepository;
 import BackendServices.authService.service.UserService;
 import BackendServices.authService.model.User;
+import BackendServices.authService.util.JwtUtil;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -17,26 +20,27 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, UserRepository userRepository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
         String token = userService.registerUser(user);
 
-        // Return token in response
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User registered successfully!");
-        response.put("token", token);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
-
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return userService.loginUser(request);
     }
 }
